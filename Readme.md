@@ -4,7 +4,7 @@
 [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Александр Асанович](https://htmlacademy.ru/profile/id115058).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Козлов](https://htmlacademy.ru/profile/id128999).
 
 ### Немного о себе
 
