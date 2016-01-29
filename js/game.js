@@ -378,20 +378,69 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(330,110);
+      this.ctx.lineTo(610,110);
+      this.ctx.lineTo(610,230);
+      this.ctx.lineTo(310,250);
+      this.ctx.closePath();
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+      this.ctx.fill();
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(320,100);
+      this.ctx.lineTo(600,100);
+      this.ctx.lineTo(600,220);
+      this.ctx.lineTo(300,240);
+      this.ctx.closePath();
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.fill();
+
+      var maxWidth = 260;
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          this.drawTextInCanvas('You have won!', maxWidth);
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          this.drawTextInCanvas('You have failed!', maxWidth);
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          this.drawTextInCanvas('Game is on pause!', maxWidth);
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          this.drawTextInCanvas('Welcome to the game! Press Space to start', maxWidth);
           break;
       }
+    },
+
+    /**
+    * Отрисовка текста в Canvas
+    * @param {string} text
+    * @param {number} maxWidth
+    **/
+    drawTextInCanvas: function(text, maxWidth){
+      var marginTop = 125;
+      var marginLeft = 330;
+      var lineHeight = 24;
+      var words = text.split(" ");
+      var line = "";
+      this.ctx.font = "16pt PT Mono";
+      this.ctx.fillStyle = '#000000';
+
+      for (var n = 0; n < words.length; n++) {
+          var testLine = line + words[n] + " ";
+          var testWidth = this.ctx.measureText(testLine).width;
+          if (testWidth > maxWidth) {
+              this.ctx.fillText(line, marginLeft, marginTop);
+              line = words[n] + " ";
+              marginTop += lineHeight;
+          }
+          else {
+              line = testLine;
+          }
+      }
+      this.ctx.fillText(line, marginLeft, marginTop);
     },
 
     /**
