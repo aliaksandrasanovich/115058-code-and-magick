@@ -380,19 +380,19 @@
     _drawPauseScreen: function() {
 
       this.ctx.beginPath();
-      this.ctx.moveTo(330,110);
-      this.ctx.lineTo(610,110);
-      this.ctx.lineTo(610,230);
-      this.ctx.lineTo(310,250);
+      this.ctx.moveTo(330, 110);
+      this.ctx.lineTo(610, 110);
+      this.ctx.lineTo(610, 230);
+      this.ctx.lineTo(310, 250);
       this.ctx.closePath();
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
       this.ctx.fill();
 
       this.ctx.beginPath();
-      this.ctx.moveTo(320,100);
-      this.ctx.lineTo(600,100);
-      this.ctx.lineTo(600,220);
-      this.ctx.lineTo(300,240);
+      this.ctx.moveTo(320, 100);
+      this.ctx.lineTo(600, 100);
+      this.ctx.lineTo(600, 220);
+      this.ctx.lineTo(300, 240);
       this.ctx.closePath();
       this.ctx.fillStyle = '#ffffff';
       this.ctx.fill();
@@ -419,26 +419,26 @@
     * @param {string} text
     * @param {number} maxWidth
     **/
-    drawTextInCanvas: function(text, maxWidth){
+    drawTextInCanvas: function(text, maxWidth) {
       var marginTop = 125;
       var marginLeft = 330;
       var lineHeight = 24;
-      var words = text.split(" ");
-      var line = "";
-      this.ctx.font = "16pt PT Mono";
+      var words = text.split(' ');
+      var line = '';
+      this.ctx.font = '16pt PT Mono';
       this.ctx.fillStyle = '#000000';
 
       for (var n = 0; n < words.length; n++) {
-          var testLine = line + words[n] + " ";
-          var testWidth = this.ctx.measureText(testLine).width;
-          if (testWidth > maxWidth) {
-              this.ctx.fillText(line, marginLeft, marginTop);
-              line = words[n] + " ";
-              marginTop += lineHeight;
-          }
-          else {
-              line = testLine;
-          }
+        var testLine = line + words[n] + ' ';
+        var testWidth = this.ctx.measureText(testLine).width;
+        if (testWidth > maxWidth) {
+          this.ctx.fillText(line, marginLeft, marginTop);
+          line = words[n] + ' ';
+          marginTop += lineHeight;
+        }
+        else {
+          line = testLine;
+        }
       }
       this.ctx.fillText(line, marginLeft, marginTop);
     },
