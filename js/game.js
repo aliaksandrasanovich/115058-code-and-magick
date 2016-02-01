@@ -435,8 +435,7 @@
           this.ctx.fillText(line, marginLeft, marginTop);
           line = words[n] + ' ';
           marginTop += lineHeight;
-        }
-        else {
+        } else {
           line = testLine;
         }
       }
