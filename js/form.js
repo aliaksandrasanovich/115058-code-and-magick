@@ -27,26 +27,26 @@
   validate();
 
   for (var i = 0; i < mark.length; i++) {
-    mark[i].onclick = function(evt){
+    mark[i].onclick = function() {
       validate('text');
-    }
+    };
   }
 
-  name.oninpute = function(evt){
+  name.oninpute = function() {
     validate('name');
-  }
+  };
 
-  text.onchange = function(evt){
+  text.onchange = function() {
     validate('text');
-  }
+  };
 
-  function validate(fieldName){
+  function validate(fieldName) {
     switch (fieldName) {
       case 'name':
         if (name.value.trim().length === 0) {
           labelName.style.visibility = 'visible';
         } else {
-          labelName.style.visibility = 'hidden'
+          labelName.style.visibility = 'hidden';
         }
         break;
 
@@ -70,5 +70,5 @@
       labelContainer.style.visibility = 'visible';
       submit.setAttribute('disabled', 'disabled');
     }
-  };
+  }
 })();
