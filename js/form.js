@@ -28,39 +28,32 @@
 
   for (var i = 0; i < mark.length; i++) {
     mark[i].onclick = function() {
-      validate('text');
+      validate();
     };
   }
 
-  name.oninpute = function() {
-    validate('name');
+  name.oninput = function() {
+    validate();
   };
 
-  text.onchange = function() {
-    validate('text');
+  text.oninput = function() {
+    validate();
   };
 
-  function validate(fieldName) {
-    switch (fieldName) {
-      case 'name':
-        if (name.value.trim().length === 0) {
-          labelName.style.visibility = 'visible';
-        } else {
-          labelName.style.visibility = 'hidden';
-        }
-        break;
-
-      case 'text':
-        if (mark.value < 3) {
-          if (text.value.trim().length === 0) {
-            labelText.style.visibility = 'visible';
-          } else {
-            labelText.style.visibility = 'hidden';
-          }
-        } else {
-          labelText.style.visibility = 'hidden';
-        }
-        break;
+  function validate() {
+    if (name.value.trim().length === 0) {
+      labelName.style.visibility = 'visible';
+    } else {
+      labelName.style.visibility = 'hidden';
+    }
+    if (mark.value < 3) {
+      if (text.value.trim().length === 0) {
+        labelText.style.visibility = 'visible';
+      } else {
+        labelText.style.visibility = 'hidden';
+      }
+    } else {
+      labelText.style.visibility = 'hidden';
     }
 
     if (labelName.style.visibility === 'hidden' && labelText.style.visibility === 'hidden') {
