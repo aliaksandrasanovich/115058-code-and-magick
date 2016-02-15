@@ -1,4 +1,4 @@
-// global docCookies
+/* global docCookies */
 'use strict';
 (function() {
   var formContainer = document.querySelector('.overlay-container');
