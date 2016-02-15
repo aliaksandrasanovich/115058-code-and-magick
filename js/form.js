@@ -14,4 +14,54 @@
     evt.preventDefault();
     formContainer.classList.add('invisible');
   };
+
+  var labelText = document.querySelector('.review-fields-text');
+  var labelName = document.querySelector('.review-fields-name');
+  var labelContainer = document.querySelector('.review-fields');
+
+  var formElement = document.forms['review-form'];
+  var mark = formElement['review-mark'];
+  var name = formElement['review-name'];
+  var text = formElement['review-text'];
+  var submit = formElement['review-submit'];
+  validate();
+
+  for (var i = 0; i < mark.length; i++) {
+    mark[i].onclick = function() {
+      validate();
+    };
+  }
+
+  name.oninput = function() {
+    validate();
+  };
+
+  text.oninput = function() {
+    validate();
+  };
+
+  function validate() {
+    if (name.value.trim().length === 0) {
+      labelName.style.visibility = 'visible';
+    } else {
+      labelName.style.visibility = 'hidden';
+    }
+    if (mark.value < 3) {
+      if (text.value.trim().length === 0) {
+        labelText.style.visibility = 'visible';
+      } else {
+        labelText.style.visibility = 'hidden';
+      }
+    } else {
+      labelText.style.visibility = 'hidden';
+    }
+
+    if (labelName.style.visibility === 'hidden' && labelText.style.visibility === 'hidden') {
+      labelContainer.style.visibility = 'hidden';
+      submit.removeAttribute('disabled');
+    } else {
+      labelContainer.style.visibility = 'visible';
+      submit.setAttribute('disabled', 'disabled');
+    }
+  }
 })();
