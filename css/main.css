@@ -38,6 +38,10 @@ h2 {
   display: none !important;
 }
 
+.hide {
+  visibility: hidden;;
+}
+
 header {
   position: relative;
 
