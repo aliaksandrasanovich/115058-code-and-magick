@@ -1,5 +1,5 @@
+/* global docCookies */
 'use strict';
-
 (function() {
   var formContainer = document.querySelector('.overlay-container');
   var formOpenButton = document.querySelector('.reviews-controls-new');
@@ -15,15 +15,23 @@
     formContainer.classList.add('invisible');
   };
 
-  var labelText = document.querySelector('.review-fields-text');
-  var labelName = document.querySelector('.review-fields-name');
-  var labelContainer = document.querySelector('.review-fields');
-
+  // Форма и поля ввода
   var formElement = document.forms['review-form'];
   var mark = formElement['review-mark'];
   var name = formElement['review-name'];
   var text = formElement['review-text'];
   var submit = formElement['review-submit'];
+
+  // html-элементы, сообщающие об ошибках
+  var labelContainer = document.querySelector('.review-fields');
+  var labelText = document.querySelector('.review-fields-text');
+  var labelName = document.querySelector('.review-fields-name');
+
+  // Установка начальных значений из cookies
+  name.value = docCookies.getItem('name') || '';
+  text.value = docCookies.getItem('text') || '';
+
+  // Проверка на заполнение обязательных полей формы
   validate();
 
   for (var i = 0; i < mark.length; i++) {
@@ -40,28 +48,70 @@
     validate();
   };
 
+  formElement.onchange = function(evt) {
+    evt.preventDefault();
+
+    // получение количества дней, в течении которых будут существовать cookies
+    var expirationDays = geNumberOfDaysBeforeExpiration();
+
+    // запись в cookies значений формы
+    docCookies.setItem('name', name.value, new Date() + expirationDays);
+    docCookies.setItem('text', text.value, new Date() + expirationDays);
+
+    formElement.onchange();
+  };
+
+
+  /**
+   * Проверка на заполнение обязательных полей формы и
+   * показ сообшения пользователю о необходимости их заполнить.
+   */
   function validate() {
+    // Проверка поля "Имя".
+    // Показывается(прячется) сообщение об ошибке.
     if (name.value.trim().length === 0) {
-      labelName.style.visibility = 'visible';
+      labelName.classList.remove('hide');
     } else {
-      labelName.style.visibility = 'hidden';
-    }
-    if (mark.value < 3) {
-      if (text.value.trim().length === 0) {
-        labelText.style.visibility = 'visible';
-      } else {
-        labelText.style.visibility = 'hidden';
-      }
-    } else {
-      labelText.style.visibility = 'hidden';
+      labelName.classList.add('hide');
     }
 
-    if (labelName.style.visibility === 'hidden' && labelText.style.visibility === 'hidden') {
-      labelContainer.style.visibility = 'hidden';
+    // Проверка поля "Отзыв". Поле обязательно, если поле "Оценка" < 3.
+    // Показывается(прячется) сообщение об ошибке.
+    if (mark.value < 3) {
+      if (text.value.trim().length === 0) {
+        labelText.classList.remove('hide');
+      } else {
+        labelText.classList.add('hide');
+      }
+    } else {
+      labelText.classList.add('hide');
+    }
+
+    // Показывается(прячется) контейнер для сообщений об ошибках
+    if (labelName.classList.contains('hide') && labelText.classList.contains('hide')) {
+      labelContainer.classList.add('hide');
       submit.removeAttribute('disabled');
     } else {
-      labelContainer.style.visibility = 'visible';
+      labelContainer.classList.remove('hide');
       submit.setAttribute('disabled', 'disabled');
     }
+  }
+
+  /**
+   * Получение количества дней, прошедших с ближайшего дня рождения
+   */
+  function geNumberOfDaysBeforeExpiration() {
+    var currentDate = new Date();
+    var birthday = new Date(currentDate.getFullYear(), 11, 23);
+
+    /**
+     * Если дня рождения в этом году еще не было, то берём
+     * прошлогодний день рождения
+     */
+    if (currentDate - birthday < 0) {
+      birthday = new Date(currentDate.getFullYear() - 1, 11, 23);
+    }
+
+    return (currentDate - birthday) / 1000 / 60 / 60 / 24;
   }
 })();
