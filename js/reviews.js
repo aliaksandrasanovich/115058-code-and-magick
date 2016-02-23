@@ -20,7 +20,7 @@
     reviewElement.classList.add('reviews-list-loading');
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://o0.github.io/assets/json/reviews.json');
+    xhr.open('GET', 'https://o0.github.io/assets/json/reviews.json');
     xhr.onload = function(evt) {
       var loadedReviews = JSON.parse(evt.target.response);
       reviews = loadedReviews;
